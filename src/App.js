@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useState } from 'react';
 import './App.css';
+// import bg from './Content/Images/bg.jpg'
+// background-image: url("../src/Content/Images/bg.jpg");
 
 
 const App = () => { 
+
   //Usestate variables
   const [pokemon, setPokemon] = useState("pikachu");
   const [pokemonData, setPokemonData] = useState([]);
