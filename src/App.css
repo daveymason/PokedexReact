@@ -1,7 +1,7 @@
  .App {
   text-align: center;
 }
-body {
+body { 
   background-image: url("../src/Content/Images/bg.jpg");
   background-size: 100%;
 }
