@@ -2,6 +2,7 @@
   text-align: center;
 }
 body {
+  background-image: url("../src/Content/Images/bg.jpg");
   background-size: 100%;
 }
 
