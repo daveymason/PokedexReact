@@ -3,10 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-core": "^3.0.0",
+    "@devexpress/dx-react-grid": "^3.0.0",
+    "@devexpress/dx-react-grid-material-ui": "^3.0.0",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@fontsource/roboto": "^4.5.3",
+    "@mui/icons-material": "^5.4.1",
+    "@mui/material": "^5.4.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "devextreme": "^21.2.4",
+    "devextreme-react": "^21.2.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -35,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "devextreme-themebuilder": "^21.2.4"
   }
 }
