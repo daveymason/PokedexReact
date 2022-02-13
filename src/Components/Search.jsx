@@ -1,95 +1,115 @@
 import axios from "axios";
 import { useState } from "react";
-import * as React from 'react';
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import * as React from "react";
+import { DataGrid, Column, Scrolling } from "devextreme-react/data-grid";
+
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 const Search = () => {
-      //Usestate variables
-      const [pokemon, setPokemon] = useState("pikachu");
-      const [pokemonData, setPokemonData] = useState([]);
-      const [pokemonType, setPokemonType] = useState("");
-    
-      //Get data from API
-      const getPokemon = async () => {
-        const toArray = [];
-        try {
-          const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
-          const res = await axios.get(url);
-    
-          //Set useStates to data
-          toArray.push(res.data);
-          setPokemonType(res.data.types[0].type.name);
-          setPokemonData(toArray);
-    
-          console.log(res);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-    
-      const handleChange = (e) => {
-        setPokemon(e.target.value.toLowerCase());
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        getPokemon();
-      };
-    
-      return (
-        <div className="App">
-          <form onSubmit={handleSubmit}>
-            <label>
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Enter Pokemon"
-              />
-            </label>
-          </form>
-    
-          {pokemonData.map((data) => {
-            return (
-              <div className="container">
-                <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="" src={data.sprites["front_default"]} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={pokemon}
-            secondary={
-              <ul>
-                <li>
-                  <strong>Type: </strong>
-                  {pokemonType}
-                </li>
-                <li>
-                  <strong>Height: </strong>
-                  {Math.round(data.height * 3.9)}
-                </li>
-                <li>
-                  <strong>Weight: </strong>
-                  {Math.round(data.weight / 4.3)} lbs
-                </li>
-                <li>
-                  <strong>Battles: </strong>
-                  {data.game_indices.length}
-                </li>
-              </ul>
-            }
+  //Usestate variables
+  const [pokemon, setPokemon] = useState("");
+  const [pokemons, setPokemons] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
+  const [pokemonType, setPokemonType] = useState("");
+
+  //Get data from API
+  const getPokemon = async () => {
+    const toArray = [];
+    try {
+      const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+      const res = await axios.get(url);
+
+      //Set useStates to data
+      toArray.push(res.data);
+      setPokemonType(res.data.types[0].type.name);
+      setPokemonData(toArray);
+
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getAllPokemon = () => {
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=898")
+      .then((response) => response.json())
+      .then((url) => setPokemons({ pokemons: url.results }));
+  };
+
+  const handleChange = (e) => {
+    setPokemon(e.target.value.toLowerCase());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getPokemon();
+  };
+
+  const showCellValue = (e) => {
+    setPokemon(e.value.toLowerCase());
+ }
+
+  const allPokemonColumns = ["id", "name", "weight", "base_experience"];
+
+  return (
+    <div className="App">
+      <hr />
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <DataGrid
+            dataSource={pokemons.pokemons}
+            rowAlternationEnabled={true}
+            showBorders={true}
+            height={440}
+            remoteOperations={true}
+            onCellClick={showCellValue}
+          >
+            <Column 
+              dataField="name" 
+              
+            />
+            <Scrolling mode="virtual" rowRenderingMode="virtual" />
+          </DataGrid>
+          <hr />
+          <Button
+        onClick={getAllPokemon}
+        variant="contained"
+        endIcon={<SendIcon />}
+      >
+        getAllPokemon
+      </Button>
+        </Grid>
+        <Grid item xs={9}>
+        <form onSubmit={handleSubmit}>
+        <label>
+          <input
+            type="text"
+            onChange={handleChange}
+            placeholder="Enter Pokemon"
           />
-        </ListItem>
-      </List>;
-              </div>
-            );
-          })}
-        </div>
-      );
-    };
-    
-    export default Search;
+        </label>
+      </form>
+          <DataGrid
+            dataSource={pokemonData}
+            rowAlternationEnabled={true}
+            showBorders={true}
+            defaultColumns={allPokemonColumns}
+          />
+          <hr />
+          <Button onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
+        getPokemon
+      </Button>
+      
+        </Grid>
+      </Grid>
+      
+    </div>
+  );
+};
+
+export default Search;

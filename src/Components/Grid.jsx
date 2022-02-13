@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+import "devextreme/dist/css/dx.light.css";
+
+import { DataGrid, Column } from "devextreme-react/data-grid";
+import axios from "axios";
 
 class Grid extends React.Component {
   constructor() {
@@ -6,25 +11,33 @@ class Grid extends React.Component {
 
     this.state = {
       pokemons: [],
+      pokemon: '',
     };
   }
 
   componentDidMount() {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=9")
+    fetch("https://pokeapi.co/api/v2/pokemon/125")
       .then((response) => response.json())
-      .then((url) => this.setState({ pokemons: url.results }));
+      .then((url) => this.setState({ pokemons: url.results }))
+
+      console.log(pokemons)
+      
   }
 
   render() {
     const { pokemons } = this.state;
-
+    let { pokemon } = this.state;
+    
+    console.log(pokemon.abilities)
     return (
-      <ul>
-        {pokemons.map((pokemon) => (
-          <li key={pokemon.id}> {pokemon.name} </li>
-        ))}
-        {console.log(pokemons)}
-      </ul>
+      <DataGrid 
+      dataSource={pokemons}
+      rowAlternationEnabled={true}
+      showBorders={true}
+      >
+        <Column dataSource="id"/>
+      </DataGrid>
+      
     );
   }
 }
