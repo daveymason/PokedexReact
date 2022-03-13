@@ -16,7 +16,7 @@ class Grid extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://pokeapi.co/api/v2/pokemon/125")
+    fetch("https://pokeapi.co/api/v2/pokemon/")
       .then((response) => response.json())
       .then((url) => this.setState({ pokemons: url.results }))
 

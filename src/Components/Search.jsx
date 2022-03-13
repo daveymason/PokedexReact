@@ -52,7 +52,7 @@ const Search = () => {
 
   const showCellValue = (e) => {
     setPokemon(e.value.toLowerCase());
- }
+  };
 
   const allPokemonColumns = ["id", "name", "weight", "base_experience"];
 
@@ -60,7 +60,17 @@ const Search = () => {
     <div className="App">
       <hr />
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
+          <Button
+            onClick={getAllPokemon}
+            variant="contained"
+            endIcon={<SendIcon />}
+          >
+            getAllPokemon
+          </Button>
+        </Grid>
+
+        <Grid item xs={12}>
           <DataGrid
             dataSource={pokemons.pokemons}
             rowAlternationEnabled={true}
@@ -69,45 +79,41 @@ const Search = () => {
             remoteOperations={true}
             onCellClick={showCellValue}
           >
-            <Column 
-              dataField="name" 
-              
-            />
+            <Column dataField="name" />
             <Scrolling mode="virtual" rowRenderingMode="virtual" />
           </DataGrid>
           <hr />
-          <Button
-        onClick={getAllPokemon}
-        variant="contained"
-        endIcon={<SendIcon />}
-      >
-        getAllPokemon
-      </Button>
         </Grid>
-        <Grid item xs={9}>
-        <form onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            onChange={handleChange}
-            placeholder="Enter Pokemon"
-          />
-        </label>
-      </form>
+
+        <Grid item xs={4}>
+          <form onSubmit={handleSubmit}>
+            <label>
+              <input
+                type="text"
+                onChange={handleChange}
+                placeholder="Enter Pokemon"
+              />
+            </label>
+          </form>
+        </Grid>
+        <Grid item xs={2}>
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            endIcon={<SendIcon />}
+          >
+            getPokemon
+          </Button>
+        </Grid>
+        <Grid item xs={6}>
           <DataGrid
             dataSource={pokemonData}
             rowAlternationEnabled={true}
             showBorders={true}
             defaultColumns={allPokemonColumns}
           />
-          <hr />
-          <Button onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
-        getPokemon
-      </Button>
-      
         </Grid>
       </Grid>
-      
     </div>
   );
 };
