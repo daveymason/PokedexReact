@@ -1,21 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
 import * as React from "react";
-import { DataGrid, Column, Scrolling } from "devextreme-react/data-grid";
+import DataGrid, { Column, Selection, Scrolling } from 'devextreme-react/data-grid';
+
+
 
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 
-const Search = () => {
+const Pokemon = () => {
   //Usestate variables
   const [pokemon, setPokemon] = useState("");
   const [pokemons, setPokemons] = useState([]);
   const [pokemonData, setPokemonData] = useState(["id", "name", "weight", "base_experience"]);
-  const [pokemonType, setPokemonType] = useState("");
 
   //Get data from API
   const getPokemon = async () => {
@@ -34,23 +33,11 @@ const Search = () => {
     }
   };
 
-  const getNewPokemon = () => {
+  const getPokemonTwo = () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
       .then((response) => response.json())
       .then((url) => setPokemonData({ pokemonData: url.results }));
     };
-
-  const handleChange = (e) => {
-    setPokemon(e.data.name)
-    console.log('Pokemon Name :' + e.data.name)
-    getNewPokemon() 
-    
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    getPokemon();
-  };
 
   const getAllPokemon = () => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=898")
@@ -58,11 +45,17 @@ const Search = () => {
       .then((url) => setPokemons({ pokemons: url.results }));
   };
 
+  const handleChange = (e) => {
+    alert('Pokemon Name :' + e.data.name)
+    setPokemon(e.data.name)
+    getPokemon() 
+  };
+
   return (
     <div className="App">
       <hr />
       <Grid container spacing={2}>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Button
             onClick={getAllPokemon}
             variant="contained"
@@ -71,57 +64,24 @@ const Search = () => {
             getAllPokemon
           </Button>
         </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={7}>
           <DataGrid
             dataSource={pokemons.pokemons}
             rowAlternationEnabled={true}
             showBorders={true}
             height={440}
-            remoteOperations={true}
-            onCellClick={handleChange}
-            onRowClick={handleChange}
           >
             <Column 
               dataField="name"
-              onCellClick={handleChange} 
+              onClick={handleChange} 
             />
             <Scrolling mode="virtual" rowRenderingMode="virtual" />
           </DataGrid>
           <hr />
-        </Grid>
-
-        <Grid item xs={4}>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Enter Pokemon"
-              />
-            </label>
-          </form>
-        </Grid>
-        <Grid item xs={2}>
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            endIcon={<SendIcon />}
-          >
-            getPokemon
-          </Button>
-        </Grid>
-        <Grid item xs={6}>
-          <DataGrid
-            dataSource={pokemonData.pokemonData}
-            rowAlternationEnabled={true}
-            showBorders={true}
-            defaultColumns={pokemonData}
-          />
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Search;
+export default Pokemon;

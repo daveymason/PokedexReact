@@ -3,7 +3,7 @@ import "devextreme/dist/css/dx.light.css";
 import "./App.css";
 import * as React from 'react';
 
-import Search from "./Components/Search";
+import Pokemon from "./Components/Pokemon";
 
 
 // import bg from './Content/Images/bg.jpg'
@@ -12,7 +12,7 @@ import Search from "./Components/Search";
 const App = () => {
   return (
     <>
-    <Search />
+    <Pokemon />
     
     </>
   );
