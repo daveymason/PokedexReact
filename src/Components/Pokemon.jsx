@@ -84,7 +84,13 @@ const Pokemon = () => {
         </DataGrid>
         <hr />
       </Grid>
-
+      {pokemonData.map((data) => {
+      return (
+      <div className="container">
+        <img src={data.sprites["front_default"]} />
+      </div>
+    );
+  })}
       <Grid item xs={9}>
         <DataGrid dataSource={pokemonData} showBorders={true}>
           <Column dataField="name" />
@@ -95,6 +101,8 @@ const Pokemon = () => {
           <Column dataField="types" />
         </DataGrid>
       </Grid>
+
+  
     </Grid>
   );
 };
