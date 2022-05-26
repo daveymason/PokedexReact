@@ -7,6 +7,7 @@ import DataGrid, {
 } from 'devextreme-react/data-grid';
 
 import {PokemonGrid} from './PokemonGrid';
+import {PokemonDetails} from './PokemonDetails';
 //https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/RowSelection/React/Light/
 
 import Button from "@mui/material/Button";
@@ -30,7 +31,6 @@ const Pokemon = () => {
       toArray.push(e.data);
       setPokemonData(toArray);
 
-      console.table(e.data);
     } catch (e) {
       console.log(e);
     }
@@ -43,9 +43,13 @@ const Pokemon = () => {
   };
 
   const handleChange = (e) => {
-    const tempVarNewPokemon = e.data.name; //to update instead of using useEffect 
-    getPokemon(tempVarNewPokemon);
+    const pokemon = e.data.name; //to do: update to useEffect 
+    getPokemon(pokemon);
   };
+
+  const renderTest = () => {
+   
+  }
 
   return (
     <Grid container justifyContent="space-evenly" direction="row" className="App">
@@ -84,13 +88,7 @@ const Pokemon = () => {
         </DataGrid>
         <hr />
       </Grid>
-      {pokemonData.map((data) => {
-      return (
-      <div className="container">
-        <img src={data.sprites["front_default"]} />
-      </div>
-    );
-  })}
+    
       <Grid item xs={9}>
         <DataGrid dataSource={pokemonData} showBorders={true}>
           <Column dataField="name" />
@@ -100,6 +98,14 @@ const Pokemon = () => {
           <Column dataField="weight" />
           <Column dataField="types" />
         </DataGrid>
+
+        {pokemonData.map((data) => {
+      return (
+      <div className="container">
+        <img src={data.sprites["front_default"]} />
+      </div>
+    );
+  })}
       </Grid>
 
   
