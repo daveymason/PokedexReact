@@ -47,8 +47,9 @@ const Pokemon = () => {
     getPokemon(pokemon);
   };
 
-  const renderTest = () => {
-   
+  const filterType = (pokemon) => {
+    const filter = pokemon.pokemon.filter((pokemon) => pokemon.name === "bulbasaur");
+    console.log(filter);
   }
 
   return (
@@ -65,6 +66,11 @@ const Pokemon = () => {
         >
           getAllPokemon
         </Button>
+        <Button
+          onClick={filterType}
+          variant="contained"
+          endIcon={<SendIcon />}
+        >Lets see what happens</Button>
       </Grid>
       <Grid
         item
