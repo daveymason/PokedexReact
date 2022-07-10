@@ -2,11 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import * as React from "react";
 import DataGrid, {
-  Scrolling, Paging, Column, HeaderFilter,  MasterDetail,
-  GroupPanel, FilterRow,
+  Scrolling,  Column, 
+  Selection, FilterRow,
 } from 'devextreme-react/data-grid';
 
-import {PokemonGrid} from './PokemonGrid';
+
 import {PokemonDetails} from './PokemonDetails';
 //https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/RowSelection/React/Light/
 
@@ -47,17 +47,11 @@ const Pokemon = () => {
     getPokemon(pokemon);
   };
 
-  const filterType = (pokemon) => {
-    const filter = pokemon.pokemon.filter((pokemon) => pokemon.name === "bulbasaur");
-    console.log(filter);
-  }
-
   return (
     <Grid container justifyContent="space-evenly" direction="row" className="App">
       <Grid
-        container
-        justifyContent='flex-start'
-        sx={{pl: 5, ml: 5}}
+        item
+        xs={12}
       >
         <Button
           onClick={getAllPokemon}
@@ -66,12 +60,7 @@ const Pokemon = () => {
         >
           getAllPokemon
         </Button>
-        <Button
-          onClick={filterType}
-          variant="contained"
-          endIcon={<SendIcon />}
-        >Lets see what happens</Button>
-      </Grid>
+        </Grid>
       <Grid
         item
         xs={2}
@@ -84,35 +73,22 @@ const Pokemon = () => {
           onRowClick={handleChange}
           remoteOperations={true}
         >
-          <MasterDetail
-          enabled={true}
-          component={PokemonGrid}
-        />
-          <Column dataField="name" />
+          <Selection mode="single" />
+          <Column dataField="name" caption="Name" />
           <Scrolling mode="virtual" rowRenderingMode="virtual" />
           <FilterRow visible={true} />
         </DataGrid>
         <hr />
       </Grid>
     
-      <Grid item xs={9}>
-        <DataGrid dataSource={pokemonData} showBorders={true}>
-          <Column dataField="name" />
-          <Column dataField="id" />
-          <Column dataField="base_experience" />
-          <Column dataField="height" />
-          <Column dataField="weight" />
-          <Column dataField="types" />
-        </DataGrid>
-
+      
         {pokemonData.map((data) => {
-      return (
-      <div className="container">
-        <img src={data.sprites["front_default"]} />
-      </div>
-    );
-  })}
-      </Grid>
+          return (
+            <Grid item xs={9} sx={{bgcolor: "#fff"}}>
+                <PokemonDetails data={data} />
+            </Grid>
+          );
+        })}
 
   
     </Grid>
