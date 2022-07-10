@@ -9,6 +9,28 @@ import Divider from "@mui/material/Divider";
 import { Typography } from "@mui/material";
 
 export const PokemonDetails = (data) => {
+
+  let typeColor = {
+    normal: "#A8A77A",
+    fighting: "#C22E28",
+    flying: "#A98FF3",
+    poison: "#A33D40",
+    ground: "#E2BF65",
+    rock: "#B8A038",
+    bug: "#A6B91A",
+    ghost: "#735797",
+    steel: "#B7B7CE",
+    fire: "#EE8130",
+    water: "#6390F0",
+    grass: "#7AC74C",
+    electric: "#F7D02C",
+    psychic: "#F95587",
+    ice: "#96D9D6",
+    dragon: "#6F35FC",
+    dark: "#705746",
+    fairy: "#D685AD",
+  };
+
   return (
     <Grid container justifyContent="space-evenly" direction="row">
       <Card sx={{ textTransform: "capitalize" }}>
@@ -25,7 +47,7 @@ export const PokemonDetails = (data) => {
                 {data.data.types.length > 0
                   ? data.data.types.map((type, index) => {
                       return (
-                        <Typography key={index} variant="p">
+                        <Typography key={index} variant="p" sx={{color: typeColor[type.type.name]}}>
                           {type.type.name}{" "}
                           {index !== data.data.types.length - 1 ? " / " : ""}
                         </Typography>
